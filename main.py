@@ -53,7 +53,7 @@ def __main():
             __main()
         if m.select == 9:
             print(sep_dot, "\n", "Sampai Jumpa")
-            sys.exit(1)
+            sys.exit(0)
 
 
 if __name__ == "__main__":
