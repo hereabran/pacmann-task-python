@@ -28,9 +28,9 @@ Read the docs [here](data/README.md).
 ## Hasil Test Case
 1. Pendaftaran User
   - Menginputkan Data
-  ![input data](img/1-sel-1.png)
+  - ![input data](img/1-sel-1.png)
   - Menampilkan Data User Setelah Insert
-  ![input data](img/2-sel-5.png)
+  - ![input data](img/2-sel-5.png)
 2. Pendaftaran Buku
   - Menginputkan Buku
   ![input data](img/3-sel-2.png)
