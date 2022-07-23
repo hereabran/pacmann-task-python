@@ -33,11 +33,11 @@ Read the docs [here](data/README.md).
   - ![input data](img/2-sel-5.png)
 2. Pendaftaran Buku
   - Menginputkan Buku
-  ![input data](img/3-sel-2.png)
+![input data](img/3-sel-2.png)
   - Menampilkan Daftar Buku
-  ![input data](img/4-sel-4.png)
+![input data](img/4-sel-4.png)
   - Mencari nama buku dengan keyword
-  ![input data](img/5-sel-7.png)
+![input data](img/5-sel-7.png)
 3. Peminjaman
   - Menginputkan Data Peminjaman dan Menampilkan Data Buku Setelah Dilakukan Peminjaman (Stock Berkurang)
   ![input data](img/6-sel-3.png)
