@@ -31,7 +31,7 @@ class MysqlConn:
     __create_database() -> None
     execute_query(query="") -> None
     read_query(query="") -> pd.DataFrame() 
-    db_conn() -> Class
+    init_db() -> None
     """
     host_name: str = db_host
     user: str = db_user
@@ -93,36 +93,32 @@ class MysqlConn:
         columns = [col[0] for col in cursor.description]
         return pd.DataFrame(result, columns=columns)
 
-    @classmethod
-    def db_conn(cls, init: bool = False):
-        db = cls()
-        if init:
-            db.__create_database()
-            q_table = {
-                "user": """CREATE TABLE IF NOT EXISTS user(
-                            id_user INT(6) AUTO_INCREMENT PRIMARY KEY,
-                            nama VARCHAR(50) NOT NULL,
-                            tgl_lahir DATE NOT NULL,
-                            pekerjaan VARCHAR(50),
-                            alamat VARCHAR(50)
-                        );""",
-                "buku": """CREATE TABLE IF NOT EXISTS buku(
-                            id_buku INT(6) AUTO_INCREMENT PRIMARY KEY,
-                            nama_buku VARCHAR(50) NOT NULL,
-                            kategori VARCHAR(50),
-                            stock INT(10) NOT NULL
-                        );""",
-                "peminjaman": """CREATE TABLE IF NOT EXISTS peminjaman(
-                            id_user INT(6),
-                            id_buku INT(6),
-                            nama_peminjam VARCHAR(50),
-                            nama_buku VARCHAR(50),
-                            tanggal_pinjam DATE NOT NULL,
-                            tanggal_pengembalian DATE NOT NULL,
-                            FOREIGN KEY (id_user) REFERENCES user(id_user),
-                            FOREIGN KEY (id_buku) REFERENCES buku(id_buku)
-                        );""",
-            }
-            for q in q_table.values():
-                db.execute_query(q)
-        return db
+    def init_db(self):
+        self.__create_database()
+        q_table = {
+            "user": """CREATE TABLE IF NOT EXISTS user(
+                        id_user INT(6) AUTO_INCREMENT PRIMARY KEY,
+                        nama VARCHAR(50) NOT NULL,
+                        tgl_lahir DATE NOT NULL,
+                        pekerjaan VARCHAR(50),
+                        alamat VARCHAR(50)
+                    );""",
+            "buku": """CREATE TABLE IF NOT EXISTS buku(
+                        id_buku INT(6) AUTO_INCREMENT PRIMARY KEY,
+                        nama_buku VARCHAR(50) NOT NULL,
+                        kategori VARCHAR(50),
+                        stock INT(10) NOT NULL
+                    );""",
+            "peminjaman": """CREATE TABLE IF NOT EXISTS peminjaman(
+                        id_user INT(6),
+                        id_buku INT(6),
+                        nama_peminjam VARCHAR(50),
+                        nama_buku VARCHAR(50),
+                        tanggal_pinjam DATE NOT NULL,
+                        tanggal_pengembalian DATE NOT NULL,
+                        FOREIGN KEY (id_user) REFERENCES user(id_user),
+                        FOREIGN KEY (id_buku) REFERENCES buku(id_buku)
+                    );""",
+        }
+        for q in q_table.values():
+            self.execute_query(q)

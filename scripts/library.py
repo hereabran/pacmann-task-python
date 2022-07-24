@@ -36,14 +36,14 @@ class Library(MysqlConn):
             INSERT INTO user (nama, tgl_lahir, pekerjaan, alamat) 
             VALUES("{nama}", "{tgl_lahir}", "{pekerjaan}", "{alamat}");
             """
-            self.db_conn().execute_query(query)
+            self.execute_query(query)
         except ValueError as e:
             print("Error: ", e)
 
     def list_user(self):
         query = "SELECT * FROM user"
         try:
-            users = self.db_conn().read_query(query)
+            users = self.read_query(query)
             print(users)
         except Exception as e:
             print("Error: ", e)
@@ -58,14 +58,14 @@ class Library(MysqlConn):
             INSERT INTO buku (id_buku, nama_buku, kategori, stock) 
             VALUES("{kode_buku}", "{nama_buku}", "{kategori}", "{stock}");
             """
-            self.db_conn().execute_query(query)
+            self.execute_query(query)
         except ValueError as e:
             print("Error: ", e)
 
     def stock_book(self):
         try:
             query = "SELECT id_buku, stock FROM buku"
-            bs = self.db_conn().read_query(query)
+            bs = self.read_query(query)
             self.book_stocks = bs.to_dict(orient="records")
         except Exception as e:
             print("Error: ", e)
@@ -73,7 +73,7 @@ class Library(MysqlConn):
     def list_book(self):
         query = "SELECT * FROM buku"
         try:
-            books = self.db_conn().read_query(query)
+            books = self.read_query(query)
             print(books)
         except Exception as e:
             print("Error: ", e)
@@ -82,7 +82,7 @@ class Library(MysqlConn):
         try:
             string = input("Masukkan nama buku yang anda cari: ")
             query = f"SELECT * FROM buku WHERE nama_buku LIKE '%{string}%'"
-            books = self.db_conn().read_query(query)
+            books = self.read_query(query)
             print(sep_dot, "\n", books)
         except ValueError as e:
             print("Error: ", e)
@@ -115,7 +115,7 @@ class Library(MysqlConn):
                 "update": f"UPDATE buku SET stock={(stock - 1) if stock > 0 else 0} WHERE id_buku={id_buku};",
             }
             for q in queries.values():
-                self.db_conn().execute_query(q)
+                self.execute_query(q)
             print(sep_dot, "\n", f"Buku dipinjamkan ke: {nama}\n", sep_dot)
         except Exception as e:
             print("Error: ", e)
@@ -123,7 +123,7 @@ class Library(MysqlConn):
     def list_peminjaman(self):
         query = "SELECT * FROM peminjaman"
         try:
-            peminjamans = self.db_conn().read_query(query)
+            peminjamans = self.read_query(query)
             print(peminjamans)
         except Exception as e:
             print("Error: ", e)
@@ -141,7 +141,7 @@ class Library(MysqlConn):
                 "update": f"UPDATE buku SET stock={stock + 1} WHERE id_buku={id_buku};",
             }
             for q in queries.values():
-                self.db_conn().execute_query(q)
+                self.execute_query(q)
             print(sep_dot, f"\nBuku telah dikembalikan\n", sep_dot)
         except Exception as e:
             print("Error: ", e)
